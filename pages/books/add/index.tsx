@@ -1,7 +1,10 @@
+import { Button, InputLabel, TextField } from "@mui/material";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
-import { SyntheticEvent } from "react";
+import { has } from "lodash";
+
 import { useForm } from "react-hook-form";
+import { createBook } from "../../api/hello";
 
 const AddBook: NextPage = () => {
   const router = useRouter();
@@ -12,33 +15,45 @@ const AddBook: NextPage = () => {
     watch,
     formState: { errors },
   } = useForm();
-  const onSubmit = (data: any) => {
-    console.log(data);
+  const onSubmit = async (data: any) => {
+    await createBook(data);
+    router.push("/books");
   };
 
   const backToList = () => {
     router.push("/books");
   };
 
-  console.log("render add book");
-
   return (
     <div>
-      <button onClick={backToList}>Back to list</button>
+      <Button variant="outlined" onClick={backToList}>
+        Back to list
+      </Button>
       <div>Create a new book</div>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div>
-          <input defaultValue="test" {...register("title")}></input>
-        </div>
-        <div>
-          <input defaultValue="test" {...register("author")}></input>
-        </div>
-        <div>
-          <input defaultValue="test" {...register("year")}></input>
-        </div>
+        <InputLabel htmlFor="component-simple">Title</InputLabel>
+        <TextField
+          placeholder="Name of the book"
+          {...register("title", { required: true })}
+          error={has(errors, "title")}
+        />
+        <InputLabel htmlFor="component-simple">Author</InputLabel>
+        <TextField
+          placeholder="Author..."
+          {...register("author", { required: true })}
+          error={has(errors, "author")}
+        />
+        <InputLabel htmlFor="component-simple">Year</InputLabel>
+        <TextField
+          placeholder="Add year"
+          {...register("year", { required: true })}
+          error={has(errors, "year")}
+        />
 
         <div>
-          <button type="submit">Submit</button>
+          <Button variant="contained" type="submit">
+            Submit
+          </Button>
         </div>
       </form>
     </div>
