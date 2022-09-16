@@ -5,6 +5,8 @@ import { has } from "lodash";
 
 import { useForm } from "react-hook-form";
 import { createBook } from "../../api/hello";
+import { queryClient } from "../../../src/services/queryClient";
+import { GET_BOOKS } from "../../constants/keys";
 
 const AddBook: NextPage = () => {
   const router = useRouter();
@@ -17,6 +19,7 @@ const AddBook: NextPage = () => {
   } = useForm();
   const onSubmit = async (data: any) => {
     await createBook(data);
+    queryClient.invalidateQueries([GET_BOOKS]);
     router.push("/books");
   };
 

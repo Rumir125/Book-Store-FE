@@ -1,30 +1,22 @@
 import { Button, List, ListItem } from "@mui/material";
 import type { NextPage } from "next";
 import Head from "next/head";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
+import { useUsers } from "../src/hooks/users";
 
 import styles from "../styles/Home.module.css";
-import { fetchUsers } from "./api/hello";
-import { GET_USERS } from "./constants/keys";
 
 const Home: NextPage = () => {
   const router = useRouter();
-
-  const [users, setUsers] = useState([]);
 
   const goToUserCreatePage = async () => {
     router.push("/users/create");
   };
 
-  const { isLoading, isError, isSuccess, data } = useQuery([GET_USERS], () =>
-    fetchUsers()
-  );
-
-  useEffect(() => {
-    setUsers(data?.data || []);
-  }, [data]);
+  const { userData } = useUsers();
 
   return (
     <div className={styles.container}>
@@ -35,16 +27,21 @@ const Home: NextPage = () => {
       </Head>
 
       <main>
-        <Button variant="contained" onClick={() => router.push("/books")}>
-          Go to Books Page
-        </Button>
+        <div style={{ display: "flex" }}>
+          <Button variant="contained" onClick={() => router.push("/books")}>
+            Go to Books Page
+          </Button>
 
-        <Button onClick={goToUserCreatePage}>Create User</Button>
+          <div style={{ marginLeft: "auto" }}>
+            <Button onClick={goToUserCreatePage}>Create User</Button>
+            <Button>
+              <Link href="/users/signin">Sign In</Link>{" "}
+            </Button>
+          </div>
+        </div>
         <List>
-          {users.map((user: any, index) => (
-            <ListItem key={`${user.firstName}-${index}`}>
-              {`${user.firstName} ${user.lastName}`}
-            </ListItem>
+          {userData.map((item: any) => (
+            <ListItem>{`${item.firstName} ${item.lastName}`}</ListItem>
           ))}
         </List>
       </main>

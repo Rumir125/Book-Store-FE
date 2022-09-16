@@ -27,12 +27,6 @@ const CreateUserPage: NextPage = () => {
     router.push("/");
   };
 
-  const backToList = () => {
-    router.push("/");
-  };
-
-  console.log("render create user");
-
   return (
     <div>
       <Button variant="outlined">
@@ -51,6 +45,14 @@ const CreateUserPage: NextPage = () => {
           placeholder="Last Name..."
           {...register("lastName", { required: true })}
           error={has(errors, "lastName")}
+        />
+
+        <InputLabel htmlFor="component-simple">Password</InputLabel>
+        <TextField
+          placeholder="Password..."
+          {...register("password", { required: true })}
+          error={has(errors, "password")}
+          type="password"
         />
 
         <div>

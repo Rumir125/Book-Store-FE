@@ -1,47 +1,36 @@
 import { Button } from "@mui/material";
-import axios from "axios";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
-
-import { BACKEND_BASE_URL } from "../constants/endpoints";
+import BookDetails from "../../src/components/BookDetails";
+import { useBooks } from "../../src/hooks/books";
 
 const Books: NextPage = () => {
-  const [books, setBooks] = useState<any>([]);
   const router = useRouter();
 
   const goToPage = () => {
     router.push("books/add");
   };
 
-  useEffect(() => {
-    axios
-      .get(`${BACKEND_BASE_URL}/books`)
-      .then((response) => setBooks(response.data));
-  }, []);
+  const { booksData } = useBooks();
+
+  console.log(booksData);
 
   return (
     <div>
-      <Button variant="outlined" onClick={() => router.push("/")}>
-        Back to Home Page
-      </Button>
+      <div style={{ display: "flex", justifyContent: "space-between" }}>
+        <Button variant="outlined" onClick={() => router.push("/")}>
+          Back to Home Page
+        </Button>
+        <Button variant="contained" onClick={goToPage}>
+          Add a new book
+        </Button>
+      </div>
       <div>Here are the books</div>
-      <div>
-        {books.map((book: any) => {
-          return (
-            <div key={book.title}>
-              <p>{book.title}</p>
-              <ul>
-                <li>{book.author}</li>
-                <li>{book.year}</li>
-              </ul>
-            </div>
-          );
+      <div style={{ display: "flex", justifyContent: "flex-start" }}>
+        {booksData.map((book: any) => {
+          return <BookDetails key={book.title} {...book} />;
         })}
       </div>
-      <Button variant="contained" onClick={goToPage}>
-        Add a new book
-      </Button>
     </div>
   );
 };
