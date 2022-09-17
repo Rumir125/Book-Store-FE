@@ -11,7 +11,6 @@ export default function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
-  console.log(req);
   res.status(200).json({ name: "John Jones" });
 }
 
@@ -45,4 +44,8 @@ export const signIn = async (payload: any) => {
 
 export const deleteBook = async (bookId: number) => {
   return axios.delete(`${BACKEND_BASE_URL}/books/${bookId}`, getHeaders());
+};
+
+export const deleteUser = async (userId: number) => {
+  return axios.delete(`${BACKEND_BASE_URL}/user/${userId}`, getHeaders());
 };

@@ -13,8 +13,6 @@ const Books: NextPage = () => {
 
   const { booksData } = useBooks();
 
-  console.log(booksData);
-
   return (
     <div>
       <div style={{ display: "flex", justifyContent: "space-between" }}>

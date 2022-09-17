@@ -1,15 +1,9 @@
-import {
-  Button,
-  Checkbox,
-  FormControlLabel,
-  InputLabel,
-  TextField,
-} from "@mui/material";
+import { Button, InputLabel, TextField } from "@mui/material";
 import { NextPage } from "next";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
-import { createUser, signIn } from "../../api/hello";
+import { signIn } from "../../api/hello";
 
 import { has } from "lodash";
 
@@ -23,10 +17,11 @@ const SignInPage: NextPage = () => {
     formState: { errors },
   } = useForm();
   const onSubmit = async (data: any) => {
-    const res: any = await signIn(data);
-    console.log(res.data);
-    localStorage.setItem("jwtToken", res.data.access_token);
-    router.push("/");
+    try {
+      const res: any = await signIn(data);
+      localStorage.setItem("jwtToken", res.data.access_token);
+      router.push("/");
+    } catch (e) {}
   };
 
   return (
@@ -38,19 +33,12 @@ const SignInPage: NextPage = () => {
         <div>
           <div style={{ width: "fit-content", margin: "auto" }}>Login user</div>
           <form onSubmit={handleSubmit(onSubmit)}>
-            <InputLabel htmlFor="component-simple">First Name</InputLabel>
+            <InputLabel htmlFor="component-simple">Username</InputLabel>
             <TextField
-              placeholder="First Name"
-              {...register("firstName", { required: true })}
-              error={has(errors, "firstName")}
+              placeholder="Username..."
+              {...register("username", { required: true })}
+              error={has(errors, "username")}
             />
-            <InputLabel htmlFor="component-simple">Last Name</InputLabel>
-            <TextField
-              placeholder="Last Name..."
-              {...register("lastName", { required: true })}
-              error={has(errors, "lastName")}
-            />
-
             <InputLabel htmlFor="component-simple">Password</InputLabel>
             <TextField
               placeholder="Password..."
@@ -59,7 +47,6 @@ const SignInPage: NextPage = () => {
               type="password"
               autoComplete="awd"
             />
-
             <div>
               <Button variant="contained" type="submit">
                 Submit

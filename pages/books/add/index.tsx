@@ -1,4 +1,4 @@
-import { Button, InputLabel, TextField } from "@mui/material";
+import { Button, InputLabel, List, ListItem, TextField } from "@mui/material";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
 import { has } from "lodash";
@@ -8,6 +8,23 @@ import { createBook } from "../../api/hello";
 import { queryClient } from "../../../src/services/queryClient";
 import { GET_BOOKS } from "../../constants/keys";
 
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+
+interface IFormInputs {
+  title: string;
+  author: number;
+  year: number;
+}
+
+const schema = yup
+  .object({
+    title: yup.string().required(),
+    author: yup.string().required(),
+    year: yup.number().required(),
+  })
+  .required();
+
 const AddBook: NextPage = () => {
   const router = useRouter();
 
@@ -16,7 +33,7 @@ const AddBook: NextPage = () => {
     handleSubmit,
     watch,
     formState: { errors },
-  } = useForm();
+  } = useForm<IFormInputs>({ resolver: yupResolver(schema) });
   const onSubmit = async (data: any) => {
     await createBook(data);
     queryClient.invalidateQueries([GET_BOOKS]);
@@ -37,19 +54,19 @@ const AddBook: NextPage = () => {
         <InputLabel htmlFor="component-simple">Title</InputLabel>
         <TextField
           placeholder="Name of the book"
-          {...register("title", { required: true })}
+          {...register("title")}
           error={has(errors, "title")}
         />
         <InputLabel htmlFor="component-simple">Author</InputLabel>
         <TextField
           placeholder="Author..."
-          {...register("author", { required: true })}
+          {...register("author")}
           error={has(errors, "author")}
         />
         <InputLabel htmlFor="component-simple">Year</InputLabel>
         <TextField
           placeholder="Add year"
-          {...register("year", { required: true })}
+          {...register("year")}
           error={has(errors, "year")}
         />
 
@@ -59,6 +76,14 @@ const AddBook: NextPage = () => {
           </Button>
         </div>
       </form>
+
+      <List>
+        {Object.values(errors).map((err, i) => (
+          <ListItem style={{ color: "red", paddingTop: "0px" }} key={i}>
+            *{err.message}
+          </ListItem>
+        ))}
+      </List>
     </div>
   );
 };

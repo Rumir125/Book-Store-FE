@@ -4,13 +4,21 @@ import type { AppProps } from "next/app";
 import { QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 import { queryClient } from "../src/services/queryClient";
+import { RouteGuard } from "../src/guards/route.guard";
+
+import { Provider } from "react-redux";
+import store from "../src/store/store";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <QueryClientProvider client={queryClient}>
-      <Component {...pageProps} />
-      <ReactQueryDevtools initialIsOpen={false} />
-    </QueryClientProvider>
+    <Provider store={store}>
+      <QueryClientProvider client={queryClient}>
+        <RouteGuard>
+          <Component {...pageProps} />
+          <ReactQueryDevtools initialIsOpen={false} />
+        </RouteGuard>
+      </QueryClientProvider>
+    </Provider>
   );
 }
 

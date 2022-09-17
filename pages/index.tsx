@@ -4,16 +4,36 @@ import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { useQuery } from "react-query";
 import { useUsers } from "../src/hooks/users";
+import { queryClient } from "../src/services/queryClient";
 
 import styles from "../styles/Home.module.css";
+import { deleteUser } from "./api/hello";
+import { GET_USERS } from "./constants/keys";
+import { useDispatch, useSelector } from "react-redux";
+import { setAuthorized } from "../src/features/user/userSlice";
+import DeleteUserModal from "../src/components/DeleteUserModal";
 
 const Home: NextPage = () => {
   const router = useRouter();
+  const dispatch = useDispatch();
+  const [modalOpen, setModalOpen] = useState(false);
+  const [user, setUser] = useState({});
+
+  const isAuthorized = useSelector((state: any) => state.user.authorized);
 
   const goToUserCreatePage = async () => {
     router.push("/users/create");
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("jwtToken");
+    dispatch(setAuthorized(false));
+  };
+
+  const handleOpenModal = (user: any) => {
+    setUser(user);
+    setModalOpen(true);
   };
 
   const { userData } = useUsers();
@@ -33,17 +53,35 @@ const Home: NextPage = () => {
           </Button>
 
           <div style={{ marginLeft: "auto" }}>
-            <Button onClick={goToUserCreatePage}>Create User</Button>
-            <Button>
-              <Link href="/users/signin">Sign In</Link>{" "}
-            </Button>
+            {!isAuthorized && (
+              <Button onClick={goToUserCreatePage}>Sign Up</Button>
+            )}
+            {!isAuthorized && (
+              <Button>
+                <Link href="/users/signin">Sign In</Link>
+              </Button>
+            )}
+            {isAuthorized && <Button onClick={handleLogout}>Log Out</Button>}
           </div>
         </div>
         <List>
-          {userData.map((item: any) => (
-            <ListItem>{`${item.firstName} ${item.lastName}`}</ListItem>
+          {userData.map((item: any, index: number) => (
+            <ListItem
+              key={`${item.username}-${index}`}
+              style={{ display: "flex", justifyContent: "space-between" }}
+            >
+              {`${item.firstName} ${item.lastName}`}
+              <Button
+                variant="contained"
+                color="error"
+                onClick={() => handleOpenModal(item)}
+              >
+                Delete User
+              </Button>
+            </ListItem>
           ))}
         </List>
+        <DeleteUserModal open={modalOpen} setOpen={setModalOpen} user={user} />
       </main>
 
       <footer className={styles.footer}></footer>
