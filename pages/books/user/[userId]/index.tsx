@@ -3,24 +3,19 @@ import { NextPage } from "next";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { decodeToken } from "react-jwt";
-import BookDetails from "../../src/components/BookDetails";
-import { useBooks, useUserBooks } from "../../src/hooks/books";
+import BookDetails from "../../../../src/components/BookDetails";
+import { useUserBooks } from "../../../../src/hooks/books";
 
 const Books: NextPage = () => {
   const router = useRouter();
-  const [userId, setUserId] = useState(0);
+
+  const { userId }: any = router.query;
 
   const goToPage = () => {
     router.push("books/add");
   };
 
   const { booksData } = useUserBooks(userId);
-
-  useEffect(() => {
-    const token = localStorage.getItem("jwtToken") || "";
-    const decodedToken: any = decodeToken(token);
-    setUserId(decodedToken.id);
-  }, []);
 
   return (
     <div>

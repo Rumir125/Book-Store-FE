@@ -8,14 +8,17 @@ import { RouteGuard } from "../src/guards/route.guard";
 
 import { Provider } from "react-redux";
 import store from "../src/store/store";
+import ToolbarLayout from "../src/components/ToolbarLayout";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <Provider store={store}>
       <QueryClientProvider client={queryClient}>
         <RouteGuard>
-          <Component {...pageProps} />
-          <ReactQueryDevtools initialIsOpen={false} />
+          <ToolbarLayout>
+            <Component {...pageProps} />
+            <ReactQueryDevtools initialIsOpen={false} />
+          </ToolbarLayout>
         </RouteGuard>
       </QueryClientProvider>
     </Provider>

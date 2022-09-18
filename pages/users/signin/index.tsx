@@ -3,7 +3,7 @@ import { NextPage } from "next";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
-import { signIn } from "../../api/hello";
+import { signIn } from "../../api/user-api";
 
 import { has } from "lodash";
 
@@ -26,9 +26,6 @@ const SignInPage: NextPage = () => {
 
   return (
     <div>
-      <Button variant="outlined">
-        <Link href="/">Back to list</Link>
-      </Button>
       <div style={{ display: "flex", justifyContent: "center" }}>
         <div>
           <div style={{ width: "fit-content", margin: "auto" }}>Login user</div>

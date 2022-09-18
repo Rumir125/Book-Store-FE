@@ -3,7 +3,7 @@ import { NextPage } from "next";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
-import { createUser } from "../../api/hello";
+import { createUser } from "../../api/user-api";
 import { has } from "lodash";
 
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -44,9 +44,6 @@ const CreateUserPage: NextPage = () => {
 
   return (
     <div>
-      <Button variant="outlined">
-        <Link href="/">Back to list</Link>
-      </Button>
       <div style={{ width: "fit-content", margin: "auto" }}>
         <div>Sign Up</div>
         <form onSubmit={handleSubmit(onSubmit)}>

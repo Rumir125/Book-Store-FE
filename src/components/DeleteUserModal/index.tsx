@@ -1,9 +1,10 @@
 import { Button, Modal, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import React, { useState } from "react";
-import { deleteUser } from "../../pages/api/hello";
-import { GET_USERS } from "../../pages/constants/keys";
-import { queryClient } from "../services/queryClient";
+import React from "react";
+import { deleteUser } from "../../../pages/api/user-api";
+import { GET_USERS } from "../../../pages/constants/keys";
+import { queryClient } from "../../services/queryClient";
+import useStyles from "./styles";
 
 const style = {
   position: "absolute" as "absolute",
@@ -19,6 +20,7 @@ const style = {
 
 const DeleteUserModal: React.FC<any> = ({ open, setOpen, user }) => {
   const handleClose = () => setOpen(false);
+  const classes = useStyles();
 
   const handleDeleteUser = async () => {
     await deleteUser(user.id);
@@ -34,7 +36,7 @@ const DeleteUserModal: React.FC<any> = ({ open, setOpen, user }) => {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style}>
+        <Box className={classes.container}>
           <Typography id="modal-modal-title" variant="h6" component="h2">
             {`${user.firstName} ${user.lastName}`}
           </Typography>

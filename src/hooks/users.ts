@@ -1,5 +1,5 @@
 import { useQuery } from "react-query";
-import { fetchUsers } from "../../pages/api/hello";
+import { fetchUsers } from "../../pages/api/user-api";
 import { GET_USERS } from "../../pages/constants/keys";
 
 export const useUsers = () => {
