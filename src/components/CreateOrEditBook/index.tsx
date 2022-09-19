@@ -43,14 +43,13 @@ const CreateOrEditBook: React.FC<any> = ({ book, isEdit = false }) => {
     router.push("/books");
   };
 
-  const backToList = () => {
-    router.push("/books");
-  };
-
   return (
     <div>
       <div>{isEdit ? "Edit a book" : "Create a new book"}</div>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        style={{ width: "fit-content", margin: "auto" }}
+      >
         <InputLabel htmlFor="component-simple">Title</InputLabel>
         <TextField
           placeholder="Name of the book"
@@ -73,14 +72,20 @@ const CreateOrEditBook: React.FC<any> = ({ book, isEdit = false }) => {
           defaultValue={isEdit ? book.year : ""}
         />
 
-        <div>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            marginTop: "20px",
+          }}
+        >
           <Button variant="contained" type="submit">
-            Submit
+            {isEdit ? "Update Book" : "Create Book"}
           </Button>
         </div>
       </form>
 
-      <List>
+      <List style={{ width: "fit-content", margin: "auto" }}>
         {Object.values(errors).map((err, i) => (
           <ListItem style={{ color: "red", paddingTop: "0px" }} key={i}>
             *{err.message}

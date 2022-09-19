@@ -1,18 +1,14 @@
-import { Button, Grid, Typography } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { decodeToken } from "react-jwt";
 import BookDetails from "../../src/components/BookDetails";
-import { useBooks, useUserBooks } from "../../src/hooks/books";
+import { useUserBooks } from "../../src/hooks/books";
 
 const Books: NextPage = () => {
   const router = useRouter();
   const [userId, setUserId] = useState(0);
-
-  const goToPage = () => {
-    router.push("books/add");
-  };
 
   const { booksData } = useUserBooks(userId);
 
@@ -24,12 +20,15 @@ const Books: NextPage = () => {
 
   return (
     <div>
-      <div style={{ display: "flex", justifyContent: "flex-end" }}>
-        <Button variant="contained" onClick={goToPage}>
-          Add a new book
-        </Button>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          margin: "20px",
+        }}
+      >
+        <Typography variant="h4">Books</Typography>
       </div>
-      <Typography variant="h4">Books</Typography>
       <Grid
         style={{
           display: "flex",

@@ -1,4 +1,4 @@
-import { Box, Button } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
@@ -23,6 +23,7 @@ const ToolbarLayout: React.FC<any> = ({ children }) => {
   };
 
   const isAuthorized = useSelector((state: any) => state.user.authorized);
+  const username = useSelector((state: any) => state.user.username);
 
   return (
     <div>
@@ -51,13 +52,16 @@ const ToolbarLayout: React.FC<any> = ({ children }) => {
             </Button>
           )}
           {isAuthorized && (
-            <Button
-              style={{ color: "white" }}
-              variant="outlined"
-              onClick={handleLogout}
-            >
-              Log Out
-            </Button>
+            <div style={{ display: "flex" }}>
+              <Typography style={{ margin: "auto" }}>{username}</Typography>
+              <Button
+                style={{ color: "white" }}
+                variant="outlined"
+                onClick={handleLogout}
+              >
+                Log Out
+              </Button>
+            </div>
           )}
         </div>
       </div>

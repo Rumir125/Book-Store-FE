@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 
-import { isExpired } from "react-jwt";
+import { decodeToken, isExpired } from "react-jwt";
 import { useDispatch, useSelector } from "react-redux";
-import { setAuthorized as setReduxAuthorized } from "../features/user/userSlice";
+import {
+  setAuthorized as setReduxAuthorized,
+  setUser,
+} from "../features/user/userSlice";
 
 // import { userService } from "services";
 
@@ -40,7 +43,16 @@ function RouteGuard({ children }: any) {
     const publicPaths = ["/users/signin", "/", "/users/create"];
     const path = url.split("?")[0];
     const token = localStorage.getItem("jwtToken") || "";
+    const decodedToken: any = decodeToken(token);
     dispatch(setReduxAuthorized(!isExpired(token)));
+    dispatch(
+      setUser(
+        !isExpired(token)
+          ? { userId: decodedToken.id, username: decodedToken.username }
+          : {}
+      )
+    );
+
     if (isExpired(token) && !publicPaths.includes(path)) {
       setAuthorized(false);
       router.push({

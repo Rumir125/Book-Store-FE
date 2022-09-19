@@ -1,34 +1,17 @@
 import { Button, List, ListItem } from "@mui/material";
 import type { NextPage } from "next";
 import Head from "next/head";
-import Link from "next/link";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useUsers } from "../src/hooks/users";
-import { queryClient } from "../src/services/queryClient";
 
 import styles from "../styles/Home.module.css";
-import { GET_USERS } from "./constants/keys";
-import { useDispatch, useSelector } from "react-redux";
-import { setAuthorized } from "../src/features/user/userSlice";
 import DeleteUserModal from "../src/components/DeleteUserModal";
 
 const Home: NextPage = () => {
   const router = useRouter();
-  const dispatch = useDispatch();
   const [modalOpen, setModalOpen] = useState(false);
   const [user, setUser] = useState({});
-
-  const isAuthorized = useSelector((state: any) => state.user.authorized);
-
-  const goToUserCreatePage = async () => {
-    router.push("/users/create");
-  };
-
-  const handleLogout = () => {
-    localStorage.removeItem("jwtToken");
-    dispatch(setAuthorized(false));
-  };
 
   const handleOpenModal = (user: any) => {
     setUser(user);
@@ -45,7 +28,11 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      {/* <main> */}
+      <div style={{ display: "flex", marginTop: "20px" }}>
+        <Button variant="contained" onClick={() => router.push("/books/add")}>
+          Add a new book
+        </Button>
+      </div>
 
       <List>
         {userData.map((item: any, index: number) => (

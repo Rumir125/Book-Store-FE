@@ -15,7 +15,7 @@ export const useUserBooks = (userId: any) => {
     [GET_BOOKS, userId],
     () => getUserBooks(userId),
     {
-      enabled: !!userId,
+      enabled: !!userId && userId !== 0,
     }
   );
 

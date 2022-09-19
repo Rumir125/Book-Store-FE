@@ -18,19 +18,7 @@ const AddBook: NextPage = () => {
   const books = data?.data || [];
   const book = books.find((item: any) => item.id === id) || {};
 
-  const backToList = () => {
-    router.push("/books");
-  };
-
-  return (
-    <div>
-      <Button variant="outlined" onClick={backToList}>
-        Back to list
-      </Button>
-
-      {!isLoading && <CreateOrEditBook isEdit book={book} />}
-    </div>
-  );
+  return <div>{!isLoading && <CreateOrEditBook isEdit book={book} />}</div>;
 };
 
 export default AddBook;

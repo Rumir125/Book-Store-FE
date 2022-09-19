@@ -1,6 +1,5 @@
 import { Button, InputLabel, TextField } from "@mui/material";
 import { NextPage } from "next";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import { signIn } from "../../api/user-api";
