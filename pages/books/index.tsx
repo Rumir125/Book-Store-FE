@@ -4,13 +4,13 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { decodeToken } from "react-jwt";
 import BookDetails from "../../src/components/BookDetails";
-import { useUserBooks } from "../../src/hooks/books";
+import { useAllBooks, useUserBooks } from "../../src/hooks/books";
 
 const Books: NextPage = () => {
   const router = useRouter();
   const [userId, setUserId] = useState(0);
 
-  const { booksData } = useUserBooks(userId);
+  const { booksData } = useAllBooks();
 
   useEffect(() => {
     const token = localStorage.getItem("jwtToken") || "";

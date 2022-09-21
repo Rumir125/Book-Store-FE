@@ -1,7 +1,7 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import axios from "axios";
 import type { NextApiRequest, NextApiResponse } from "next";
-import { BACKEND_BASE_URL } from "../constants/endpoints";
+import { BACKEND_BASE_URL } from "../../src/keys/endpoints";
 
 type Data = {
   name: string;

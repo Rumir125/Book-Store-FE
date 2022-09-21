@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 
 import { decodeToken, isExpired } from "react-jwt";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import {
   setAuthorized as setReduxAuthorized,
   setUser,
@@ -15,7 +15,6 @@ export { RouteGuard };
 function RouteGuard({ children }: any) {
   const router = useRouter();
   const [authorized, setAuthorized] = useState(false);
-  // const isAuthorized = useSelector((state: any) => state.user.authorized);
   const dispatch = useDispatch();
 
   useEffect(() => {

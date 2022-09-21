@@ -1,6 +1,6 @@
 import { useQuery } from "react-query";
 import { fetchBooks, getUserBooks } from "../../pages/api/book-api";
-import { GET_BOOKS } from "../../pages/constants/keys";
+import { GET_BOOKS } from "../keys/keys";
 
 export const useBooks = () => {
   const { isLoading, isError, isSuccess, data } = useQuery([GET_BOOKS], () =>
@@ -17,6 +17,14 @@ export const useUserBooks = (userId: any) => {
     {
       enabled: !!userId && userId !== 0,
     }
+  );
+
+  return { booksData: data?.data || [], isLoading, isError };
+};
+
+export const useAllBooks = () => {
+  const { isLoading, isError, isSuccess, data } = useQuery([GET_BOOKS], () =>
+    fetchBooks()
   );
 
   return { booksData: data?.data || [], isLoading, isError };

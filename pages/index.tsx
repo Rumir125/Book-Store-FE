@@ -28,9 +28,19 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <div style={{ display: "flex", marginTop: "20px" }}>
+      <div
+        style={{
+          display: "flex",
+          marginTop: "20px",
+          justifyContent: "space-between",
+        }}
+      >
         <Button variant="contained" onClick={() => router.push("/books/add")}>
           Add a new book
+        </Button>
+
+        <Button variant="contained" onClick={() => router.push("/books")}>
+          View all Books
         </Button>
       </div>
 
@@ -43,7 +53,7 @@ const Home: NextPage = () => {
               justifyContent: "space-between",
             }}
           >
-            {`${item.firstName} ${item.lastName}`}
+            {`${item.username} (${item.firstName} ${item.lastName})`}
             <div style={{ display: "flex", columnGap: "10px" }}>
               <Button
                 variant="contained"

@@ -3,7 +3,7 @@ import { Box } from "@mui/system";
 import React from "react";
 import { deleteBook } from "../../../pages/api/book-api";
 import { deleteUser } from "../../../pages/api/user-api";
-import { GET_BOOKS, GET_USERS } from "../../../pages/constants/keys";
+import { GET_BOOKS, GET_USERS } from "../../keys/keys";
 import { queryClient } from "../../services/queryClient";
 import useStyles from "./styles";
 

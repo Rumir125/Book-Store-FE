@@ -8,13 +8,42 @@ import { queryClient } from "../../../src/services/queryClient";
 
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { GET_BOOKS } from "../../../pages/constants/keys";
+import { GET_BOOKS } from "../../keys/keys";
 import { createBook, editBook } from "../../../pages/api/book-api";
+import MultipleSelect from "../MultiSelect";
+import { useSelector } from "react-redux";
+
+const names = [
+  "Fantasy",
+  "Science Fiction",
+  "Dystopian",
+  "Action Adventure",
+  "Mystery",
+  "Horror",
+  "Historical fiction",
+  "Romance",
+  "Novel",
+  "Short Story",
+  "Children",
+  "Biography",
+  "Food & Drink",
+  "Art & Photography",
+  "Self help",
+  "History",
+  "True Crime",
+  "Humor",
+  "Essays",
+  "Religion & Spirituality",
+  "Humanities & Social Sciences",
+  "Parenting & Families",
+  "Science & Technology",
+];
 
 interface IFormInputs {
   title: string;
   author: number;
   year: number;
+  genres: string[];
 }
 
 const schema = yup
@@ -22,16 +51,20 @@ const schema = yup
     title: yup.string().required(),
     author: yup.string().required(),
     year: yup.number().required(),
+    genres: yup.array(yup.string()).required(),
   })
   .required();
 
 const CreateOrEditBook: React.FC<any> = ({ book, isEdit = false }) => {
   const router = useRouter();
 
+  const userId = useSelector((state: any) => state.user.userID);
+
   const {
     register,
     handleSubmit,
     formState: { errors },
+    setValue,
   } = useForm<IFormInputs>({ resolver: yupResolver(schema) });
   const onSubmit = async (data: any) => {
     if (isEdit) {
@@ -40,9 +73,11 @@ const CreateOrEditBook: React.FC<any> = ({ book, isEdit = false }) => {
       await createBook(data);
     }
     queryClient.invalidateQueries([GET_BOOKS]);
-    router.push("/books");
+    queryClient.invalidateQueries([GET_BOOKS, userId]);
+    router.push("/");
   };
 
+  register("genres");
   return (
     <div>
       <div>{isEdit ? "Edit a book" : "Create a new book"}</div>
@@ -72,6 +107,11 @@ const CreateOrEditBook: React.FC<any> = ({ book, isEdit = false }) => {
           defaultValue={isEdit ? book.year : ""}
         />
 
+        <MultipleSelect
+          values={names}
+          setValue={setValue}
+          defaultValue={isEdit ? book.genres : []}
+        />
         <div
           style={{
             display: "flex",

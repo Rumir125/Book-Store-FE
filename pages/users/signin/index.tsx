@@ -1,13 +1,15 @@
-import { Button, InputLabel, TextField } from "@mui/material";
+import { Button, InputLabel, TextField, Typography } from "@mui/material";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import { signIn } from "../../api/user-api";
 
 import { has } from "lodash";
+import { useState } from "react";
 
 const SignInPage: NextPage = () => {
   const router = useRouter();
+  const [error, setError] = useState<any>(null);
 
   const {
     register,
@@ -20,7 +22,10 @@ const SignInPage: NextPage = () => {
       const res: any = await signIn(data);
       localStorage.setItem("jwtToken", res.data.access_token);
       router.push("/");
-    } catch (e) {}
+    } catch (e: any) {
+      console.log(e);
+      setError(e);
+    }
   };
 
   return (
@@ -49,6 +54,11 @@ const SignInPage: NextPage = () => {
               </Button>
             </div>
           </form>
+          {error && (
+            <Typography style={{ color: "red" }}>
+              *{error.response.data.message}
+            </Typography>
+          )}
         </div>
       </div>
     </div>

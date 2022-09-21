@@ -9,7 +9,7 @@ import { has } from "lodash";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { queryClient } from "../../../src/services/queryClient";
-import { GET_USERS } from "../../constants/keys";
+import { GET_USERS } from "../../../src/keys/keys";
 
 interface IFormInputs {
   firstName: string;
