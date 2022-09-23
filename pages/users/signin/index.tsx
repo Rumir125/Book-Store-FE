@@ -23,7 +23,6 @@ const SignInPage: NextPage = () => {
       localStorage.setItem("jwtToken", res.data.access_token);
       router.push("/");
     } catch (e: any) {
-      console.log(e);
       setError(e);
     }
   };

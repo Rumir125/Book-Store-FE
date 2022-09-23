@@ -6,17 +6,7 @@ import { GET_USERS } from "../../keys/keys";
 import { queryClient } from "../../services/queryClient";
 import useStyles from "./styles";
 
-const style = {
-  position: "absolute" as "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 400,
-  bgcolor: "white",
-  border: "2px solid #000",
-  boxShadow: 24,
-  p: 4,
-};
+import { toast } from "react-toastify";
 
 const DeleteUserModal: React.FC<any> = ({ open, setOpen, user }) => {
   const handleClose = () => setOpen(false);
@@ -26,6 +16,9 @@ const DeleteUserModal: React.FC<any> = ({ open, setOpen, user }) => {
     await deleteUser(user.id);
     queryClient.invalidateQueries([GET_USERS]);
     setOpen(false);
+    toast.success("You have successfully delete a user", {
+      position: toast.POSITION.BOTTOM_CENTER,
+    });
   };
 
   return (
@@ -40,13 +33,10 @@ const DeleteUserModal: React.FC<any> = ({ open, setOpen, user }) => {
           <Typography id="modal-modal-title" variant="h6" component="h2">
             {`${user.firstName} ${user.lastName}`}
           </Typography>
-          <Typography
-            id="modal-modal-description"
-            sx={{ mt: 2, paddingBottom: "20px" }}
-          >
+          <Typography id="modal-modal-description" className={classes.subtitle}>
             Are you sure you want to delete this user?
           </Typography>
-          <Box style={{ display: "flex", justifyContent: "space-between" }}>
+          <Box className={classes.cancelButton}>
             <Button variant="outlined" onClick={handleClose}>
               Cancel
             </Button>

@@ -5,6 +5,7 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
+import useStyles from "./styles";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -31,10 +32,11 @@ export default function MultipleSelect({
   formProps = {},
   setValue,
   defaultValue = [],
+  name,
+  label,
 }: any) {
-  const theme = useTheme();
+  const classes = useStyles();
   const [personName, setPersonName] = React.useState<string[]>(defaultValue);
-  console.log(personName);
 
   const handleChange = (event: SelectChangeEvent<typeof personName>) => {
     const {
@@ -44,33 +46,29 @@ export default function MultipleSelect({
       // On autofill we get a stringified value.
       typeof value === "string" ? value.split(",") : value
     );
-    setValue("genres", typeof value === "string" ? value.split(",") : value);
+    setValue(name, typeof value === "string" ? value.split(",") : value);
   };
 
   React.useEffect(() => {
     setPersonName(defaultValue);
+    setValue(name, defaultValue);
   }, [defaultValue]);
 
   return (
-    <div>
-      <FormControl sx={{ m: 1, width: 300 }} {...formProps}>
-        <InputLabel id="demo-multiple-name-label">Name</InputLabel>
+    <div className={classes.container}>
+      <InputLabel id="demo-multiple-name-label">{label}</InputLabel>
+      <FormControl sx={{ width: 500 }} {...formProps}>
         <Select
           labelId="demo-multiple-name-label"
           id="demo-multiple-name"
           multiple
           value={personName}
           onChange={handleChange}
-          input={<OutlinedInput label="Name" />}
           MenuProps={MenuProps}
           defaultValue={defaultValue}
         >
           {values.map((name: string) => (
-            <MenuItem
-              key={name}
-              value={name}
-              //   style={getStyles(name, personName, theme)}
-            >
+            <MenuItem key={name} value={name}>
               {name}
             </MenuItem>
           ))}

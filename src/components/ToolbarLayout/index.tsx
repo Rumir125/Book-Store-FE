@@ -4,10 +4,12 @@ import { useRouter } from "next/router";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setAuthorized } from "../../features/user/userSlice";
+import useStyles from "./styles";
 
 const ToolbarLayout: React.FC<any> = ({ children }) => {
   const router = useRouter();
   const dispatch = useDispatch();
+  const classes = useStyles();
 
   const goToUserCreatePage = async () => {
     router.push("/users/create");
@@ -27,35 +29,28 @@ const ToolbarLayout: React.FC<any> = ({ children }) => {
 
   return (
     <div>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          backgroundColor: "#337ab7",
-          padding: "20px 1rem",
-        }}
-      >
+      <div className={classes.container}>
         <div>
-          <Button style={{ color: "white" }} onClick={goToHomePage}>
+          <Button className={classes.button} onClick={goToHomePage}>
             Home
           </Button>
         </div>
         <div>
           {!isAuthorized && (
-            <Button style={{ color: "white" }} onClick={goToUserCreatePage}>
+            <Button className={classes.button} onClick={goToUserCreatePage}>
               Sign Up
             </Button>
           )}
           {!isAuthorized && (
-            <Button style={{ color: "white" }}>
+            <Button className={classes.button}>
               <Link href="/users/signin">Sign In</Link>
             </Button>
           )}
           {isAuthorized && (
             <div style={{ display: "flex" }}>
-              <Typography style={{ margin: "auto" }}>{username}</Typography>
+              <Typography className={classes.username}>{username}</Typography>
               <Button
-                style={{ color: "white" }}
+                className={classes.button}
                 variant="outlined"
                 onClick={handleLogout}
               >

@@ -14,6 +14,14 @@ const useStyles = makeStyles((theme) =>
       padding: "20px",
       borderRadius: "10px",
     },
+    subtitle: {
+      mt: 2,
+      paddingBottom: "20px",
+    },
+    cancelButton: {
+      display: "flex",
+      justifyContent: "space-between",
+    },
   })
 );
 

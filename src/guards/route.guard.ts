@@ -8,8 +8,6 @@ import {
   setUser,
 } from "../features/user/userSlice";
 
-// import { userService } from "services";
-
 export { RouteGuard };
 
 function RouteGuard({ children }: any) {

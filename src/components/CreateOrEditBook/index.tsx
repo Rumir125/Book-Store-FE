@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, InputLabel, List, ListItem, TextField } from "@mui/material";
+import { Button, InputLabel, TextField, Typography } from "@mui/material";
 import { useRouter } from "next/router";
 import { has } from "lodash";
 
@@ -12,6 +12,11 @@ import { GET_BOOKS } from "../../keys/keys";
 import { createBook, editBook } from "../../../pages/api/book-api";
 import MultipleSelect from "../MultiSelect";
 import { useSelector } from "react-redux";
+
+import { toast } from "react-toastify";
+import RichTextEditor from "../RichTextEditor";
+import useStyles from "./styles";
+import ErrorMessage from "../ErrorMessage";
 
 const names = [
   "Fantasy",
@@ -44,6 +49,7 @@ interface IFormInputs {
   author: number;
   year: number;
   genres: string[];
+  description: string;
 }
 
 const schema = yup
@@ -52,86 +58,115 @@ const schema = yup
     author: yup.string().required(),
     year: yup.number().required(),
     genres: yup.array(yup.string()).required(),
+    description: yup.string(),
   })
   .required();
 
 const CreateOrEditBook: React.FC<any> = ({ book, isEdit = false }) => {
+  const classes = useStyles();
   const router = useRouter();
-
-  const userId = useSelector((state: any) => state.user.userID);
+  const userId = useSelector((state: any) => state.user.userId);
 
   const {
     register,
     handleSubmit,
     formState: { errors },
     setValue,
-  } = useForm<IFormInputs>({ resolver: yupResolver(schema) });
-  const onSubmit = async (data: any) => {
-    if (isEdit) {
-      await editBook(book.id, data);
-    } else {
-      await createBook(data);
-    }
-    queryClient.invalidateQueries([GET_BOOKS]);
-    queryClient.invalidateQueries([GET_BOOKS, userId]);
-    router.push("/");
-  };
+    // reset,
+  } = useForm<IFormInputs>({
+    resolver: yupResolver(schema),
+    // defaultValues: useMemo(() => {
+    //   return book;
+    // }, []),
+  });
 
   register("genres");
+  register("description");
+
+  const onSubmit = async (data: any) => {
+    try {
+      console.log(data);
+      if (isEdit) {
+        await editBook(book.id, data);
+      } else {
+        await createBook(data);
+      }
+      queryClient.invalidateQueries([GET_BOOKS]);
+      queryClient.invalidateQueries([GET_BOOKS, userId]);
+      router.push(`/books/user/${book?.user ? book.user.id : userId}`);
+    } catch (e: any) {
+      toast.error("You are not authorized for this operation", {
+        position: toast.POSITION.BOTTOM_CENTER,
+      });
+    }
+  };
+
   return (
     <div>
       <div>{isEdit ? "Edit a book" : "Create a new book"}</div>
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        style={{ width: "fit-content", margin: "auto" }}
-      >
-        <InputLabel htmlFor="component-simple">Title</InputLabel>
-        <TextField
-          placeholder="Name of the book"
-          {...register("title")}
-          error={has(errors, "title")}
-          defaultValue={isEdit ? book.title : ""}
-        />
-        <InputLabel htmlFor="component-simple">Author</InputLabel>
-        <TextField
-          placeholder="Author..."
-          {...register("author")}
-          error={has(errors, "author")}
-          defaultValue={isEdit ? book.author : ""}
-        />
-        <InputLabel htmlFor="component-simple">Year</InputLabel>
-        <TextField
-          placeholder="Add year"
-          {...register("year")}
-          error={has(errors, "year")}
-          defaultValue={isEdit ? book.year : ""}
-        />
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <div className={classes.inputWrapper}>
+          <InputLabel htmlFor="component-simple">Title</InputLabel>
+          <TextField
+            placeholder="Name of the book"
+            {...register("title")}
+            error={has(errors, "title")}
+            defaultValue={isEdit ? book.title : ""}
+            className={classes.textField}
+          />
+          <ErrorMessage name="title" errors={errors} />
 
-        <MultipleSelect
-          values={names}
-          setValue={setValue}
-          defaultValue={isEdit ? book.genres : []}
-        />
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            marginTop: "20px",
-          }}
-        >
+          <InputLabel htmlFor="component-simple">Author</InputLabel>
+          <TextField
+            placeholder="Author..."
+            {...register("author")}
+            error={has(errors, "author")}
+            defaultValue={isEdit ? book.author : ""}
+            className={classes.textField}
+          />
+          <ErrorMessage name="author" errors={errors} />
+
+          <InputLabel htmlFor="component-simple">Year</InputLabel>
+          <TextField
+            placeholder="Add year"
+            {...register("year")}
+            error={has(errors, "year")}
+            defaultValue={isEdit ? book.year : ""}
+            className={classes.textField}
+          />
+
+          <ErrorMessage name="year" errors={errors} />
+          <MultipleSelect
+            values={names}
+            setValue={setValue}
+            defaultValue={isEdit ? book.genres : []}
+            name="genres"
+            label="Genres"
+          />
+          <InputLabel htmlFor="component-simple">Description</InputLabel>
+          <RichTextEditor
+            theme="snow"
+            setValue={setValue}
+            name="description"
+            defaultValue={isEdit ? book.description : ""}
+          />
+        </div>
+        <div className={classes.cancelButtonWrapper}>
+          <Button
+            variant="outlined"
+            onClick={() =>
+              router.push(
+                `/books/user/${book?.user.id ? book.user.id : userId}`
+              )
+            }
+          >
+            Cancel
+          </Button>
           <Button variant="contained" type="submit">
             {isEdit ? "Update Book" : "Create Book"}
           </Button>
         </div>
       </form>
-
-      <List style={{ width: "fit-content", margin: "auto" }}>
-        {Object.values(errors).map((err, i) => (
-          <ListItem style={{ color: "red", paddingTop: "0px" }} key={i}>
-            *{err.message}
-          </ListItem>
-        ))}
-      </List>
     </div>
   );
 };

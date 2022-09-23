@@ -10,6 +10,10 @@ import { Provider } from "react-redux";
 import store from "../src/store/store";
 import ToolbarLayout from "../src/components/ToolbarLayout";
 
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import "react-quill/dist/quill.snow.css";
+
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <Provider store={store}>
@@ -18,6 +22,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           <ToolbarLayout>
             <Component {...pageProps} />
             <ReactQueryDevtools initialIsOpen={false} />
+            <ToastContainer />
           </ToolbarLayout>
         </RouteGuard>
       </QueryClientProvider>

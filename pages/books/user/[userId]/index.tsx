@@ -15,6 +15,8 @@ const Books: NextPage = () => {
 
   const { booksData } = useUserBooks(userId);
 
+  console.log("books data", booksData);
+
   return (
     <div>
       <div
