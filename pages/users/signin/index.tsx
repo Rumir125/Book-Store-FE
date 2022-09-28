@@ -53,11 +53,6 @@ const SignInPage: NextPage = () => {
               </Button>
             </div>
           </form>
-          {error && (
-            <Typography style={{ color: "red" }}>
-              *{error.response.data.message}
-            </Typography>
-          )}
         </div>
       </div>
     </div>

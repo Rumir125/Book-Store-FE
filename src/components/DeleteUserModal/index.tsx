@@ -13,12 +13,18 @@ const DeleteUserModal: React.FC<any> = ({ open, setOpen, user }) => {
   const classes = useStyles();
 
   const handleDeleteUser = async () => {
-    await deleteUser(user.id);
-    queryClient.invalidateQueries([GET_USERS]);
-    setOpen(false);
-    toast.success("You have successfully delete a user", {
-      position: toast.POSITION.BOTTOM_CENTER,
-    });
+    try {
+      await deleteUser(user.id);
+      queryClient.invalidateQueries([GET_USERS]);
+      setOpen(false);
+      toast.success("You have successfully delete a user", {
+        position: toast.POSITION.BOTTOM_CENTER,
+      });
+    } catch (e) {
+      toast.error("You are not authorized to delete this user", {
+        position: toast.POSITION.BOTTOM_CENTER,
+      });
+    }
   };
 
   return (

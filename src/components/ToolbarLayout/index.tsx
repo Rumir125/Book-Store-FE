@@ -31,26 +31,28 @@ const ToolbarLayout: React.FC<any> = ({ children }) => {
     <div>
       <div className={classes.container}>
         <div>
-          <Button className={classes.button} onClick={goToHomePage}>
+          <Button style={{ color: "white" }} onClick={goToHomePage}>
             Home
           </Button>
         </div>
         <div>
           {!isAuthorized && (
-            <Button className={classes.button} onClick={goToUserCreatePage}>
+            <Button style={{ color: "white" }} onClick={goToUserCreatePage}>
               Sign Up
             </Button>
           )}
           {!isAuthorized && (
-            <Button className={classes.button}>
+            <Button style={{ color: "white" }}>
               <Link href="/users/signin">Sign In</Link>
             </Button>
           )}
           {isAuthorized && (
             <div style={{ display: "flex" }}>
-              <Typography className={classes.username}>{username}</Typography>
+              <Typography style={{ margin: "auto", cursor: "default" }}>
+                {username}
+              </Typography>
               <Button
-                className={classes.button}
+                style={{ color: "white" }}
                 variant="outlined"
                 onClick={handleLogout}
               >
