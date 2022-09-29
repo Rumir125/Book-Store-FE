@@ -17,6 +17,7 @@ import { toast } from "react-toastify";
 import RichTextEditor from "../RichTextEditor";
 import useStyles from "./styles";
 import ErrorMessage from "../ErrorMessage";
+import InputField from "../InputField";
 
 const names = [
   "Fantasy",
@@ -109,32 +110,32 @@ const CreateOrEditBook: React.FC<any> = ({ book, isEdit = false }) => {
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className={classes.inputWrapper}>
           <InputLabel htmlFor="component-simple">Title</InputLabel>
-          <TextField
+          <InputField
             placeholder="Name of the book"
-            {...register("title")}
+            register={register}
             error={has(errors, "title")}
             defaultValue={isEdit ? book.title : ""}
-            className={classes.textField}
+            name="title"
           />
           <ErrorMessage name="title" errors={errors} />
 
           <InputLabel htmlFor="component-simple">Author</InputLabel>
-          <TextField
+          <InputField
             placeholder="Author..."
-            {...register("author")}
+            register={register}
+            name="author"
             error={has(errors, "author")}
             defaultValue={isEdit ? book.author : ""}
-            className={classes.textField}
           />
           <ErrorMessage name="author" errors={errors} />
 
           <InputLabel htmlFor="component-simple">Year</InputLabel>
-          <TextField
+          <InputField
             placeholder="Add year"
-            {...register("year")}
+            register={register}
+            name="year"
             error={has(errors, "year")}
             defaultValue={isEdit ? book.year : ""}
-            className={classes.textField}
           />
 
           <ErrorMessage name="year" errors={errors} />

@@ -13,6 +13,8 @@ import ToolbarLayout from "../src/components/ToolbarLayout";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "react-quill/dist/quill.snow.css";
+import { ThemeProvider } from "@mui/styles";
+import { theme } from "../styles/theme";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -20,9 +22,11 @@ function MyApp({ Component, pageProps }: AppProps) {
       <QueryClientProvider client={queryClient}>
         <RouteGuard>
           <ToolbarLayout>
-            <Component {...pageProps} />
-            <ReactQueryDevtools initialIsOpen={false} />
-            <ToastContainer />
+            <ThemeProvider theme={theme}>
+              <Component {...pageProps} />
+              <ReactQueryDevtools initialIsOpen={false} />
+              <ToastContainer />
+            </ThemeProvider>
           </ToolbarLayout>
         </RouteGuard>
       </QueryClientProvider>

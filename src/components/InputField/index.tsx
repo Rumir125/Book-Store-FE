@@ -1,11 +1,18 @@
 import { TextField } from "@mui/material";
-import React from "react";
+import React, { forwardRef } from "react";
+import { useFormContext } from "react-hook-form";
 import useStyles from "./styles";
 
-const InputField: React.FC<any> = ({ ...props }) => {
-  const classes = useStyles();
+const InputField: React.FC<any> = forwardRef<React.FC<any>, any>(
+  ({ register, name, ...props }, ref) => {
+    const classes = useStyles();
 
-  return <TextField className={classes.container} {...props} />;
-};
+    return (
+      <TextField className={classes.container} {...register(name)} {...props} />
+    );
+  }
+);
+
+InputField.displayName = "InputField";
 
 export default InputField;

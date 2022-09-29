@@ -1,24 +1,20 @@
-import { Theme } from "@mui/material/styles";
+import { Theme } from "@mui/material";
 import { makeStyles, createStyles } from "@mui/styles";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    inputWrapper: {
+    container: {
       width: "61%",
       margin: "auto",
-
       [theme.breakpoints.down("md")]: {
         width: "100%",
       },
     },
-    cancelButtonWrapper: {
+    formWrapper: { width: "fit-content", margin: "auto" },
+    buttonWrapper: {
       display: "flex",
       justifyContent: "flex-end",
-      marginTop: "20px",
-      columnGap: "10px",
-    },
-    textField: {
-      width: "100%",
+      marginTop: "10px",
     },
   })
 );

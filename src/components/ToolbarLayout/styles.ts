@@ -7,6 +7,7 @@ const useStyles = makeStyles((theme) =>
       justifyContent: "space-between",
       backgroundColor: "#337ab7",
       padding: "20px 1rem",
+      width: "100%",
     },
     button: {
       color: "white",

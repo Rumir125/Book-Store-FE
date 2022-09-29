@@ -3,22 +3,12 @@ import { makeStyles, createStyles } from "@mui/styles";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    inputWrapper: {
+    container: {
       width: "61%",
       margin: "auto",
-
       [theme.breakpoints.down("md")]: {
         width: "100%",
       },
-    },
-    cancelButtonWrapper: {
-      display: "flex",
-      justifyContent: "flex-end",
-      marginTop: "20px",
-      columnGap: "10px",
-    },
-    textField: {
-      width: "100%",
     },
   })
 );

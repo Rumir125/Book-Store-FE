@@ -7,7 +7,7 @@ const useStyles = makeStyles((theme) =>
         minHeight: "100px",
         maxHeight: "500px",
         overflow: "overlay",
-        maxWidth: "750px",
+        // maxWidth: "750px",
       },
     },
   })

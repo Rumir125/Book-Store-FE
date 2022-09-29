@@ -3,7 +3,7 @@ import { makeStyles, createStyles } from "@mui/styles";
 const useStyles = makeStyles((theme) =>
   createStyles({
     container: {
-      width: "500px",
+      width: "100%",
     },
   })
 );
