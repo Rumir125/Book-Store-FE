@@ -21,6 +21,8 @@ const BookDetails: React.FC<any> = ({ title, author, year, id, genres }) => {
       </Typography>
       <div className={classes.imageWrapper}>
         <Image
+          width={128}
+          height={128}
           className={classes.image}
           src="/no-image.jpg"
           alt="/no-image.jpg"
