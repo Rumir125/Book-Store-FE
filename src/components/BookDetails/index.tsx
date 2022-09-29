@@ -1,4 +1,5 @@
 import { Box, Button, Typography } from "@mui/material";
+import Image from "next/image";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 import DeleteBookModal from "../DeleteBookModal";
@@ -19,7 +20,11 @@ const BookDetails: React.FC<any> = ({ title, author, year, id, genres }) => {
         {title}
       </Typography>
       <div className={classes.imageWrapper}>
-        <img className={classes.image} src="/no-image.jpg"></img>
+        <Image
+          className={classes.image}
+          src="/no-image.jpg"
+          alt="/no-image.jpg"
+        ></Image>
       </div>
       <Typography className={classes.typography}>Author: {author}</Typography>
       <Typography className={classes.typography}>Published: {year}</Typography>
