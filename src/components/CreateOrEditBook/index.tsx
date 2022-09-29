@@ -85,17 +85,19 @@ const CreateOrEditBook: React.FC<any> = ({ book, isEdit = false }) => {
 
   const onSubmit = async (data: any) => {
     try {
-      console.log(data);
       if (isEdit) {
         await editBook(book.id, data);
       } else {
         await createBook(data);
       }
       queryClient.invalidateQueries([GET_BOOKS]);
-      queryClient.invalidateQueries([GET_BOOKS, userId]);
+      queryClient.invalidateQueries([
+        GET_BOOKS,
+        book?.user ? book.user.id : userId,
+      ]);
       router.push(`/books/user/${book?.user ? book.user.id : userId}`);
     } catch (e: any) {
-      toast.error("You are not authorized for this operation", {
+      toast.error(`${e.message} ${e.response.statusText}`, {
         position: toast.POSITION.BOTTOM_CENTER,
       });
     }

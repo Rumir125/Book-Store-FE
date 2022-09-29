@@ -10,6 +10,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { queryClient } from "../../../src/services/queryClient";
 import { GET_USERS } from "../../../src/keys/keys";
+import { toast } from "react-toastify";
 
 interface IFormInputs {
   firstName: string;
@@ -37,9 +38,15 @@ const CreateUserPage: NextPage = () => {
     formState: { errors },
   } = useForm<IFormInputs>({ resolver: yupResolver(schema) });
   const onSubmit = async (data: any) => {
-    await createUser(data);
-    queryClient.invalidateQueries([GET_USERS]);
-    router.push("/");
+    try {
+      await createUser(data);
+      queryClient.invalidateQueries([GET_USERS]);
+      router.push("/");
+    } catch (e: any) {
+      toast.error(`${e.message} ${e.response.data.message}`, {
+        position: toast.POSITION.BOTTOM_CENTER,
+      });
+    }
   };
 
   return (

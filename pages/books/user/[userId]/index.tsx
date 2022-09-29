@@ -8,14 +8,7 @@ const Books: NextPage = () => {
   const router = useRouter();
 
   const { userId }: any = router.query;
-
-  const goToPage = () => {
-    router.push("/books/add");
-  };
-
   const { booksData } = useUserBooks(userId);
-
-  console.log("books data", booksData);
 
   return (
     <div>

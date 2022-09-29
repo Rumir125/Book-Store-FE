@@ -28,11 +28,11 @@ const DeleteBookModal: React.FC<any> = ({ modalOpen, setModalOpen, book }) => {
     try {
       await deleteBook(book.id);
       queryClient.invalidateQueries([GET_BOOKS]);
-      toast.success("You have successfully delete a book!", {
+      toast.success("You have successfully deleted a book!", {
         position: toast.POSITION.TOP_LEFT,
       });
-    } catch (e) {
-      toast.error("You are not authorized to delete this book!", {
+    } catch (e: any) {
+      toast.error(`${e.message} ${e.response.statusText}`, {
         position: toast.POSITION.BOTTOM_CENTER,
       });
     }

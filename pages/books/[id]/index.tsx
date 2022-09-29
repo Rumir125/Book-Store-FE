@@ -1,7 +1,7 @@
 import { NextPage } from "next";
 import { useRouter } from "next/router";
 
-import { fetchBooks } from "../../api/book-api";
+import { fetchBooks, getBook } from "../../api/book-api";
 import { GET_BOOKS } from "../../../src/keys/keys";
 
 import CreateOrEditBook from "../../../src/components/CreateOrEditBook";
@@ -12,10 +12,11 @@ const AddBook: NextPage = () => {
 
   const { id }: any = router.query;
 
-  const { data, isLoading } = useQuery([GET_BOOKS], () => fetchBooks());
+  const { data, isLoading } = useQuery([GET_BOOKS, id], () => getBook(id), {
+    enabled: !!id,
+  });
 
-  const books = data?.data || [];
-  const book = books.find((item: any) => item.id === id) || {};
+  const book = data?.data || {};
 
   return <div>{!isLoading && <CreateOrEditBook isEdit book={book} />}</div>;
 };
