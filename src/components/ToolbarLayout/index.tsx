@@ -28,7 +28,7 @@ const ToolbarLayout: React.FC<any> = ({ children }) => {
   const username = useSelector((state: any) => state.user.username);
 
   return (
-    <div>
+    <div style={{ marginBottom: "40px" }}>
       <div className={classes.container}>
         <div>
           <Button style={{ color: "white" }} onClick={goToHomePage}>

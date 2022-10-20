@@ -20,6 +20,15 @@ const useStyles = makeStyles((theme: Theme) =>
     textField: {
       width: "100%",
     },
+    photoWrapper: {
+      display: "flex",
+      justifyContent: "center",
+    },
+    title: {
+      display: "flex",
+      justifyContent: "center",
+      marginBottom: "20px",
+    },
   })
 );
 

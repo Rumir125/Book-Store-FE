@@ -5,7 +5,14 @@ import React, { useState } from "react";
 import DeleteBookModal from "../DeleteBookModal";
 import useStyles from "./styles";
 
-const BookDetails: React.FC<any> = ({ title, author, year, id, genres }) => {
+const BookDetails: React.FC<any> = ({
+  title,
+  author,
+  year,
+  id,
+  genres,
+  photoUrl,
+}) => {
   const router = useRouter();
   const classes = useStyles();
   const [modalOpen, setModalOpen] = useState(false);
@@ -24,7 +31,7 @@ const BookDetails: React.FC<any> = ({ title, author, year, id, genres }) => {
           width={128}
           height={128}
           className={classes.image}
-          src="/no-image.jpg"
+          src={photoUrl}
           alt="/no-image.jpg"
         ></Image>
       </div>

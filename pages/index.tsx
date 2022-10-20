@@ -1,24 +1,13 @@
-import { Button, List, ListItem } from "@mui/material";
+import { Button } from "@mui/material";
 import type { NextPage } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { useState } from "react";
-import { useUsers } from "../src/hooks/users";
 
 import styles from "../styles/Home.module.css";
-import DeleteUserModal from "../src/components/DeleteUserModal";
+import UsersList from "../src/components/UsersList";
 
 const Home: NextPage = () => {
   const router = useRouter();
-  const [modalOpen, setModalOpen] = useState(false);
-  const [user, setUser] = useState({});
-
-  const handleOpenModal = (user: any) => {
-    setUser(user);
-    setModalOpen(true);
-  };
-
-  const { userData } = useUsers();
 
   return (
     <div>
@@ -44,37 +33,7 @@ const Home: NextPage = () => {
         </Button>
       </div>
 
-      <List>
-        {userData.map((item: any, index: number) => (
-          <ListItem
-            key={`${item.username}-${index}`}
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-            }}
-          >
-            {`${item.username} (${item.firstName} ${item.lastName})`}
-            <div style={{ display: "flex", columnGap: "10px" }}>
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={() => router.push(`/books/user/${item.id}`)}
-              >
-                View Books
-              </Button>
-              <Button
-                variant="contained"
-                color="error"
-                onClick={() => handleOpenModal(item)}
-              >
-                Delete User
-              </Button>
-            </div>
-          </ListItem>
-        ))}
-      </List>
-      <DeleteUserModal open={modalOpen} setOpen={setModalOpen} user={user} />
-      {/* </main> */}
+      <UsersList />
 
       <footer className={styles.footer}></footer>
     </div>

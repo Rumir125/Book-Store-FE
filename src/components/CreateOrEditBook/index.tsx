@@ -1,5 +1,5 @@
-import React from "react";
-import { Button, InputLabel, TextField, Typography } from "@mui/material";
+import React, { useState } from "react";
+import { Button, InputLabel } from "@mui/material";
 import { useRouter } from "next/router";
 import { has } from "lodash";
 
@@ -18,6 +18,8 @@ import RichTextEditor from "../RichTextEditor";
 import useStyles from "./styles";
 import ErrorMessage from "../ErrorMessage";
 import InputField from "../InputField";
+import UploadImage from "../UploadImage";
+import { useUploadImage } from "../UploadImage/hooks";
 
 const names = [
   "Fantasy",
@@ -51,6 +53,7 @@ interface IFormInputs {
   year: number;
   genres: string[];
   description: string;
+  photoUrl: string;
 }
 
 const schema = yup
@@ -60,6 +63,7 @@ const schema = yup
     year: yup.number().required(),
     genres: yup.array(yup.string()).required(),
     description: yup.string(),
+    photoUrl: yup.string(),
   })
   .required();
 
@@ -80,16 +84,26 @@ const CreateOrEditBook: React.FC<any> = ({ book, isEdit = false }) => {
     //   return book;
     // }, []),
   });
-
   register("genres");
   register("description");
+  register("photoUrl");
+
+  const {
+    uploading,
+    setUploading,
+    handleUploadImage,
+    completeUpload,
+    imageUrl,
+  } = useUploadImage({ setValue, photoUrl: book.photoUrl });
 
   const onSubmit = async (data: any) => {
     try {
+      const uploadUrl = await completeUpload();
+      const dataToSend = { ...data, photoUrl: uploadUrl };
       if (isEdit) {
-        await editBook(book.id, data);
+        await editBook(book.id, dataToSend);
       } else {
-        await createBook(data);
+        await createBook(dataToSend);
       }
       queryClient.invalidateQueries([GET_BOOKS]);
       queryClient.invalidateQueries([
@@ -106,9 +120,18 @@ const CreateOrEditBook: React.FC<any> = ({ book, isEdit = false }) => {
 
   return (
     <div>
-      <div>{isEdit ? "Edit a book" : "Create a new book"}</div>
+      <div className={classes.title}>
+        {isEdit ? "Edit a book" : "Create a new book"}
+      </div>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className={classes.inputWrapper}>
+          <UploadImage
+            setValue={setValue}
+            uploading={uploading}
+            setUploading={setUploading}
+            imageUrl={imageUrl}
+            handleUploadImage={handleUploadImage}
+          />
           <InputLabel htmlFor="component-simple">Title</InputLabel>
           <InputField
             placeholder="Name of the book"
@@ -165,7 +188,7 @@ const CreateOrEditBook: React.FC<any> = ({ book, isEdit = false }) => {
           >
             Cancel
           </Button>
-          <Button variant="contained" type="submit">
+          <Button variant="contained" type="submit" disabled={uploading}>
             {isEdit ? "Update Book" : "Create Book"}
           </Button>
         </div>

@@ -1,7 +1,7 @@
 import { NextPage } from "next";
 import { useRouter } from "next/router";
 
-import { fetchBooks, getBook } from "../../api/book-api";
+import { getBook } from "../../api/book-api";
 import { GET_BOOKS } from "../../../src/keys/keys";
 
 import CreateOrEditBook from "../../../src/components/CreateOrEditBook";

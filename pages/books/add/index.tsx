@@ -8,7 +8,7 @@ const AddBook: NextPage = () => {
 
   return (
     <div>
-      <CreateOrEditBook />
+      <CreateOrEditBook book={{}} />
     </div>
   );
 };

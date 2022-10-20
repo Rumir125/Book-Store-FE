@@ -63,7 +63,7 @@ const RichTextEditor = ({
 
   useEffect(() => {
     setValue(name, defaultValue);
-  }, []);
+  }, [setValue, name, defaultValue]);
 
   return (
     <QuillEditor

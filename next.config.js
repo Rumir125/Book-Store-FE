@@ -5,6 +5,9 @@ const nextConfig = {
   env: {
     backendPort: 3000,
   },
+  images: {
+    domains: ["res.cloudinary.com"],
+  },
 };
 
 module.exports = nextConfig;

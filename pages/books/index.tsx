@@ -1,22 +1,10 @@
 import { Grid, Typography } from "@mui/material";
 import { NextPage } from "next";
-import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
-import { decodeToken } from "react-jwt";
 import BookDetails from "../../src/components/BookDetails";
-import { useAllBooks, useUserBooks } from "../../src/hooks/books";
+import { useAllBooks } from "../../src/hooks/books";
 
 const Books: NextPage = () => {
-  const router = useRouter();
-  const [userId, setUserId] = useState(0);
-
   const { booksData } = useAllBooks();
-
-  useEffect(() => {
-    const token = localStorage.getItem("jwtToken") || "";
-    const decodedToken: any = decodeToken(token);
-    setUserId(decodedToken.id);
-  }, []);
 
   return (
     <div>

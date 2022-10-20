@@ -23,6 +23,7 @@ const useStyles = makeStyles((theme) =>
     image: {
       width: "128px",
       height: "128px",
+      borderRadius: "5px",
     },
     typography: {
       margin: "5px 0px",

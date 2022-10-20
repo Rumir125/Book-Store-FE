@@ -1,6 +1,5 @@
 import * as React from "react";
-import { Theme, useTheme } from "@mui/material/styles";
-import OutlinedInput from "@mui/material/OutlinedInput";
+import { Theme } from "@mui/material/styles";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
@@ -17,15 +16,6 @@ const MenuProps = {
     },
   },
 };
-
-function getStyles(name: string, personName: string[], theme: Theme) {
-  return {
-    fontWeight:
-      personName.indexOf(name) === -1
-        ? theme.typography.fontWeightRegular
-        : theme.typography.fontWeightMedium,
-  };
-}
 
 export default function MultipleSelect({
   values,
@@ -52,7 +42,7 @@ export default function MultipleSelect({
   React.useEffect(() => {
     setPersonName(defaultValue);
     setValue(name, defaultValue);
-  }, [defaultValue]);
+  }, [defaultValue, name, setValue]);
 
   return (
     <div className={classes.container}>
