@@ -10,11 +10,13 @@ export const useUploadImage = ({ setValue, photoUrl }: any) => {
   const [imageUrl, setImageUrl] = useState(photoUrl);
 
   const completeUpload = async () => {
+    if (imageUrl === photoUrl) {
+      return imageUrl;
+    }
     setUploading(true);
     try {
       const res = await axios.post(`${CLOUDINARY_URL}`, formState);
       setValue("photoUrl", res.data.url);
-      console.log(res.data.url);
       setUploading(false);
       toast.success("You have successfully uploaded an image", {
         position: toast.POSITION.BOTTOM_CENTER,

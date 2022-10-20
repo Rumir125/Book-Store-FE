@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import useStyles from "./styles";
 import Image from "next/image";
@@ -11,6 +11,10 @@ const UploadImage: React.FC<any> = ({
   handleUploadImage,
 }) => {
   const classes = useStyles();
+
+  useEffect(() => {
+    setValue("photoUrl", imageUrl);
+  }, [imageUrl, setValue]);
 
   return (
     <div>

@@ -1,7 +1,7 @@
 import { Grid, Typography } from "@mui/material";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
-import BookDetails from "../../../../src/components/BookDetails";
+import BookCard from "../../../../src/components/BookCard";
 import { useUserBooks } from "../../../../src/hooks/books";
 
 const Books: NextPage = () => {
@@ -29,7 +29,7 @@ const Books: NextPage = () => {
         }}
       >
         {booksData.map((book: any) => {
-          return <BookDetails key={book.title} {...book} />;
+          return <BookCard key={book.title} {...book} />;
         })}
       </Grid>
     </div>

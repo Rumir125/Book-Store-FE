@@ -5,13 +5,12 @@ import React, { useState } from "react";
 import DeleteBookModal from "../DeleteBookModal";
 import useStyles from "./styles";
 
-const BookDetails: React.FC<any> = ({
+const BookCard: React.FC<any> = ({
   title,
   author,
   year,
   id,
   genres,
-  description,
   photoUrl,
 }) => {
   const router = useRouter();
@@ -22,11 +21,13 @@ const BookDetails: React.FC<any> = ({
     router.push(`/books/${id}`);
   };
 
-  const genresText = genres.join(", ");
+  const handleView = () => {
+    router.push(`/books/${id}/details`);
+  };
 
   return (
     <Box className={classes.container}>
-      <Typography className={classes.title} variant="h4">
+      <Typography className={classes.title} variant="h4" onClick={handleView}>
         {title}
       </Typography>
       <div className={classes.imageWrapper}>
@@ -34,17 +35,20 @@ const BookDetails: React.FC<any> = ({
           width={128}
           height={128}
           className={classes.image}
-          src={photoUrl}
+          src={photoUrl || "/no-image.jpg"}
           alt="/no-image.jpg"
         ></Image>
       </div>
       <Typography className={classes.typography}>Author: {author}</Typography>
       <Typography className={classes.typography}>Published: {year}</Typography>
-      <Typography>Genres: {genresText}</Typography>
-      <Typography className={classes.typography}>
-        Description: {description}
-      </Typography>
       <div className={classes.footer}>
+        <Button
+          variant="contained"
+          color="error"
+          onClick={() => setModalOpen(true)}
+        >
+          Delete
+        </Button>
         <Button variant="contained" color="primary" onClick={handleEdit}>
           Edit
         </Button>
@@ -58,4 +62,4 @@ const BookDetails: React.FC<any> = ({
   );
 };
 
-export default BookDetails;
+export default BookCard;
