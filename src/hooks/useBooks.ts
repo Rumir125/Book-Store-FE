@@ -29,3 +29,11 @@ export const useAllBooks = () => {
 
   return { booksData: data?.data || [], isLoading, isError };
 };
+
+export const useSearchedBooks = () => {
+  const { isLoading, isError, isSuccess, data } = useQuery([GET_BOOKS], () =>
+    fetchBooks()
+  );
+
+  return { booksData: data?.data || [], isLoading, isError };
+};

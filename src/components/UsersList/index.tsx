@@ -2,7 +2,7 @@ import { Button, List, ListItem } from "@mui/material";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
-import { useUsers } from "../../hooks/users";
+import { useUsers } from "../../hooks/useUsers";
 import DeleteUserModal from "../DeleteUserModal";
 
 const UsersList: React.FC<any> = () => {

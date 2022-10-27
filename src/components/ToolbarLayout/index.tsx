@@ -1,7 +1,7 @@
-import { Box, Button, Typography } from "@mui/material";
+import React from "react";
+import { Box, Button, Container, Typography } from "@mui/material";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setAuthorized } from "../../features/user/userSlice";
 import useStyles from "./styles";
@@ -26,9 +26,18 @@ const ToolbarLayout: React.FC<any> = ({ children }) => {
 
   const isAuthorized = useSelector((state: any) => state.user.authorized);
   const username = useSelector((state: any) => state.user.username);
+  const userId = useSelector((state: any) => state.user.userId);
 
   return (
-    <div style={{ marginBottom: "40px" }}>
+    <Container
+      style={{
+        paddingBottom: "40px",
+        height: "100%",
+        position: "relative",
+        zIndex: 1,
+        padding: "20px 1rem",
+      }}
+    >
       <div className={classes.container}>
         <div>
           <Button style={{ color: "white" }} onClick={goToHomePage}>
@@ -47,13 +56,27 @@ const ToolbarLayout: React.FC<any> = ({ children }) => {
             </Button>
           )}
           {isAuthorized && (
-            <div style={{ display: "flex" }}>
+            <div style={{ display: "flex", columnGap: "10px" }}>
+              <Button
+                // variant="outlined"
+                style={{ color: "white" }}
+                onClick={() => router.push(`/books/user/${userId}`)}
+              >
+                My Books
+              </Button>
+              <Button
+                // variant="outlined"
+                style={{ color: "white" }}
+                onClick={() => router.push("/books")}
+              >
+                View all Books
+              </Button>
               <Typography style={{ margin: "auto", cursor: "default" }}>
                 {username}
               </Typography>
               <Button
                 style={{ color: "white" }}
-                variant="outlined"
+                // variant="outlined"
                 onClick={handleLogout}
               >
                 Log Out
@@ -62,8 +85,8 @@ const ToolbarLayout: React.FC<any> = ({ children }) => {
           )}
         </div>
       </div>
-      <Box style={{ padding: "0 1rem" }}>{children}</Box>
-    </div>
+      <Box style={{ padding: "1rem 0px" }}>{children}</Box>
+    </Container>
   );
 };
 

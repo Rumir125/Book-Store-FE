@@ -1,39 +1,8 @@
-import { Grid, Typography } from "@mui/material";
 import { NextPage } from "next";
-import { useRouter } from "next/router";
-import BookCard from "../../../../src/components/BookCard";
-import { useUserBooks } from "../../../../src/hooks/books";
+import UserBooksList from "../../../../src/components/UserBooksList";
 
 const Books: NextPage = () => {
-  const router = useRouter();
-
-  const { userId }: any = router.query;
-  const { booksData } = useUserBooks(userId);
-
-  return (
-    <div>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          margin: "20px",
-        }}
-      >
-        <Typography variant="h4">Books</Typography>
-      </div>
-      <Grid
-        style={{
-          display: "flex",
-          justifyContent: "flex-start",
-          flexWrap: "wrap",
-        }}
-      >
-        {booksData.map((book: any) => {
-          return <BookCard key={book.title} {...book} />;
-        })}
-      </Grid>
-    </div>
-  );
+  return <UserBooksList />;
 };
 
 export default Books;

@@ -4,7 +4,7 @@ const useStyles = makeStyles((theme) =>
   createStyles({
     container: {
       margin: "0px auto",
-      width: "fit-content",
+      width: "500px",
     },
     title: {
       display: "flex",
@@ -21,7 +21,8 @@ const useStyles = makeStyles((theme) =>
     },
     footer: {
       display: "flex",
-      justifyContent: "center",
+      justifyContent: "flex-end",
+      columnGap: "15px",
     },
   })
 );

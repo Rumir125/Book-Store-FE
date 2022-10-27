@@ -5,9 +5,9 @@ const useStyles = makeStyles((theme) =>
     container: {
       display: "flex",
       justifyContent: "space-between",
-      backgroundColor: "#337ab7",
-      padding: "20px 1rem",
+
       width: "100%",
+      alignItems: "center",
     },
     button: {
       color: "white",
@@ -15,6 +15,11 @@ const useStyles = makeStyles((theme) =>
     username: {
       margin: "auto",
       cursor: "default",
+    },
+    menuIcon: {
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "center",
     },
   })
 );

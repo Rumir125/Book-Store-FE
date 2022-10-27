@@ -9,15 +9,17 @@ const useStyles = makeStyles((theme) =>
       padding: "10px 20px",
       boxShadow: "2px 2px #888888",
       minWidth: "200px",
-      cursor: "pointer",
       "&:hover": {
         boxShadow: "4px 4px #888888",
       },
+      cursor: "pointer",
+      maxWidth: "300px",
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "space-between",
     },
     title: {
-      width: "fit-content",
-      marginLeft: "auto",
-      marginRight: "auto",
+      textAlign: "center",
     },
     imageWrapper: { display: "flex", justifyContent: "center" },
     image: {
@@ -26,11 +28,14 @@ const useStyles = makeStyles((theme) =>
       borderRadius: "5px",
     },
     typography: {
-      margin: "5px 0px",
+      margin: "2px auto",
     },
     footer: {
       display: "flex",
       justifyContent: "space-between",
+    },
+    icon: {
+      "&:hover": { boxShadow: "4px 4px #888888" },
     },
   })
 );
