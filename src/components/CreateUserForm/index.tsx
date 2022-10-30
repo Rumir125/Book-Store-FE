@@ -1,4 +1,4 @@
-import { Button, InputLabel, List, ListItem } from "@mui/material";
+import { Button, InputLabel } from "@mui/material";
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import { has } from "lodash";
@@ -11,6 +11,9 @@ import { toast } from "react-toastify";
 import InputField from "../InputField";
 import { createUser } from "../../../pages/api/user-api";
 import useStyles from "./styles";
+import { useState } from "react";
+import ErrorMessage from "../ErrorMessage";
+import ActionButton from "../Shared/Button";
 
 interface IFormInputs {
   firstName: string;
@@ -31,6 +34,7 @@ const schema = yup
 const CreateUserForm: React.FC<any> = () => {
   const router = useRouter();
   const classes = useStyles();
+  const [submitLoading, setSubmitLoading] = useState(false);
 
   const {
     register,
@@ -40,6 +44,7 @@ const CreateUserForm: React.FC<any> = () => {
   } = useForm<IFormInputs>({ resolver: yupResolver(schema) });
   const onSubmit = async (data: any) => {
     try {
+      setSubmitLoading(true);
       await createUser(data);
       queryClient.invalidateQueries([GET_USERS]);
       router.push("/");
@@ -48,6 +53,7 @@ const CreateUserForm: React.FC<any> = () => {
         position: toast.POSITION.BOTTOM_CENTER,
       });
     }
+    setSubmitLoading(false);
   };
 
   return (
@@ -62,6 +68,7 @@ const CreateUserForm: React.FC<any> = () => {
             error={has(errors, "firstName")}
             name="firstName"
           />
+          <ErrorMessage errors={errors} name="firstName" />
           <InputLabel htmlFor="component-simple">Last Name</InputLabel>
           <InputField
             placeholder="Last Name..."
@@ -69,6 +76,7 @@ const CreateUserForm: React.FC<any> = () => {
             error={has(errors, "lastName")}
             name="lastName"
           />
+          <ErrorMessage errors={errors} name="lastName" />
 
           <InputLabel htmlFor="component-simple">Username</InputLabel>
           <InputField
@@ -77,7 +85,7 @@ const CreateUserForm: React.FC<any> = () => {
             error={has(errors, "username")}
             name="username"
           />
-
+          <ErrorMessage errors={errors} name="username" />
           <InputLabel htmlFor="component-simple">Password</InputLabel>
           <InputField
             placeholder="Password..."
@@ -86,20 +94,24 @@ const CreateUserForm: React.FC<any> = () => {
             type="password"
             name="password"
           />
-
-          <div>
-            <Button variant="contained" type="submit">
+          <ErrorMessage errors={errors} name="password" />
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "flex-end",
+              marginTop: "10px",
+            }}
+          >
+            <ActionButton
+              variant="contained"
+              type="submit"
+              isLoading={submitLoading}
+              disabled={submitLoading}
+            >
               Submit
-            </Button>
+            </ActionButton>
           </div>
         </form>
-        <List>
-          {Object.values(errors).map((err, i) => (
-            <ListItem style={{ color: "red", paddingTop: "0px" }} key={i}>
-              *{err.message}
-            </ListItem>
-          ))}
-        </List>
       </div>
     </div>
   );

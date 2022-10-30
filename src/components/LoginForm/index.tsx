@@ -1,4 +1,4 @@
-import { Button, InputLabel } from "@mui/material";
+import { InputLabel } from "@mui/material";
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 
@@ -11,6 +11,7 @@ import { toast } from "react-toastify";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import ErrorMessage from "../ErrorMessage";
+import ActionButton from "../Shared/Button";
 
 interface ILoginInput {
   username: string;
@@ -75,9 +76,14 @@ const LoginForm: React.FC<any> = () => {
           />
           <ErrorMessage name="password" errors={errors} />
           <div className={classes.buttonWrapper}>
-            <Button variant="contained" type="submit" disabled={loading}>
+            <ActionButton
+              variant="contained"
+              type="submit"
+              disabled={loading}
+              isLoading={loading}
+            >
               Submit
-            </Button>
+            </ActionButton>
           </div>
         </form>
       </div>

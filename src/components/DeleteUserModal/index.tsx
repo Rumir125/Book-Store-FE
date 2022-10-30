@@ -7,6 +7,7 @@ import { queryClient } from "../../services/queryClient";
 import useStyles from "./styles";
 
 import { toast } from "react-toastify";
+import ActionButton from "../Shared/Button";
 
 const DeleteUserModal: React.FC<any> = ({ open, setOpen, user }) => {
   const handleClose = () => setOpen(false);
@@ -43,16 +44,16 @@ const DeleteUserModal: React.FC<any> = ({ open, setOpen, user }) => {
             Are you sure you want to delete this user?
           </Typography>
           <Box className={classes.cancelButton}>
-            <Button variant="outlined" onClick={handleClose}>
+            <ActionButton variant="outlined" onClick={handleClose}>
               Cancel
-            </Button>
-            <Button
+            </ActionButton>
+            <ActionButton
               variant="contained"
               color="error"
               onClick={handleDeleteUser}
             >
               Delete
-            </Button>
+            </ActionButton>
           </Box>
         </Box>
       </Modal>

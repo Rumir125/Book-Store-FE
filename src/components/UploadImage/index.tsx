@@ -27,8 +27,8 @@ const UploadImage: React.FC<any> = ({
           }}
         >
           <Image
-            width={100}
-            height={100}
+            width={150}
+            height={250}
             src={imageUrl || "/no-image.jpg"}
             alt="/no-image.jpg"
             id="photo"

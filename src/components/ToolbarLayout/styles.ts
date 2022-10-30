@@ -14,12 +14,18 @@ const useStyles = makeStyles((theme) =>
     },
     username: {
       margin: "auto",
-      cursor: "default",
+      cursor: "pointer",
     },
     menuIcon: {
       display: "flex",
       flexDirection: "column",
       justifyContent: "center",
+    },
+    logout: {
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "center",
+      cursor: "pointer",
     },
   })
 );

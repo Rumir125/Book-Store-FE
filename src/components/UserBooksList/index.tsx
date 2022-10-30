@@ -6,6 +6,7 @@ import BookCard from "../BookCard";
 import { useRouter } from "next/router";
 import { useUsers } from "../../hooks/useUsers";
 import useStyles from "./styles";
+import ActionButton from "../Shared/Button";
 
 const UserBooksList: React.FC<any> = () => {
   const router = useRouter();
@@ -22,12 +23,9 @@ const UserBooksList: React.FC<any> = () => {
       <div className={classes.container}>
         <Typography variant="h4">Books ({user?.username}) </Typography>
       </div>
-      <Button
-        style={{ color: "white" }}
-        onClick={() => router.push("/books/add")}
-      >
+      <ActionButton onClick={() => router.push("/books/add")}>
         Add a new book
-      </Button>
+      </ActionButton>
       <Grid container className={classes.cardsWrapper}>
         {booksData.map((book: any) => {
           return <BookCard key={book.title} {...book} />;

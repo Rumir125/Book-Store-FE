@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import DeleteBookModal from "../DeleteBookModal";
+import ActionButton from "../Shared/Button";
 import useStyles from "./styles";
 
 const BookDetails: React.FC<any> = ({
@@ -36,12 +37,12 @@ const BookDetails: React.FC<any> = ({
   return (
     <Grid container className={classes.container}>
       <Grid item md={6} xs={12}>
-        <Button
+        <ActionButton
           // variant="outlined"
           onClick={() => router.push(`/books/user/${user.id}`)}
         >
           Back to User Page
-        </Button>
+        </ActionButton>
         <div className={classes.imageWrapper}>
           <Image
             width={300}
@@ -81,18 +82,26 @@ const BookDetails: React.FC<any> = ({
         <div className={classes.footer}>
           {canEditOrEditOrDelete && (
             <>
-              <Button
+              <ActionButton
                 variant="outlined"
                 onClick={() => router.push(`/books/user/${user.id}`)}
               >
                 Cancel
-              </Button>
-              <Button variant="contained" color="error" onClick={handleDelete}>
+              </ActionButton>
+              <ActionButton
+                variant="contained"
+                color="error"
+                onClick={handleDelete}
+              >
                 Delete
-              </Button>
-              <Button variant="contained" color="primary" onClick={handleEdit}>
+              </ActionButton>
+              <ActionButton
+                variant="contained"
+                color="primary"
+                onClick={handleEdit}
+              >
                 Edit
-              </Button>
+              </ActionButton>
             </>
           )}
         </div>

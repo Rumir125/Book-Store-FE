@@ -20,6 +20,7 @@ import ErrorMessage from "../ErrorMessage";
 import InputField from "../InputField";
 import UploadImage from "../UploadImage";
 import { useUploadImage } from "../UploadImage/hooks";
+import ActionButton from "../Shared/Button";
 
 const names = [
   "Fantasy",
@@ -72,6 +73,8 @@ const CreateOrEditBook: React.FC<any> = ({ book, isEdit = false }) => {
   const router = useRouter();
   const userId = useSelector((state: any) => state.user.userId);
 
+  const [isUpdateloading, setIsUpdateLoading] = useState(false);
+
   const {
     register,
     handleSubmit,
@@ -98,6 +101,7 @@ const CreateOrEditBook: React.FC<any> = ({ book, isEdit = false }) => {
 
   const onSubmit = async (data: any) => {
     try {
+      setIsUpdateLoading(true);
       const uploadUrl = await completeUpload();
       const dataToSend = { ...data, photoUrl: uploadUrl };
       if (isEdit) {
@@ -116,7 +120,10 @@ const CreateOrEditBook: React.FC<any> = ({ book, isEdit = false }) => {
         position: toast.POSITION.BOTTOM_CENTER,
       });
     }
+    setIsUpdateLoading(false);
   };
+
+  const submitDisabled = uploading || isUpdateloading;
 
   return (
     <div>
@@ -178,19 +185,25 @@ const CreateOrEditBook: React.FC<any> = ({ book, isEdit = false }) => {
           />
         </div>
         <div className={classes.cancelButtonWrapper}>
-          <Button
+          <ActionButton
             variant="outlined"
             onClick={() =>
               router.push(
                 `/books/user/${book?.user.id ? book.user.id : userId}`
               )
             }
+            style={{ color: "#1976d2" }}
           >
             Cancel
-          </Button>
-          <Button variant="contained" type="submit" disabled={uploading}>
+          </ActionButton>
+          <ActionButton
+            variant="contained"
+            type="submit"
+            disabled={submitDisabled}
+            isLoading={submitDisabled}
+          >
             {isEdit ? "Update Book" : "Create Book"}
-          </Button>
+          </ActionButton>
         </div>
       </form>
     </div>

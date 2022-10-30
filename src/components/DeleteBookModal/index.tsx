@@ -7,6 +7,7 @@ import { queryClient } from "../../services/queryClient";
 import useStyles from "./styles";
 
 import { toast } from "react-toastify";
+import ActionButton from "../Shared/Button";
 
 const style = {
   position: "absolute" as "absolute",
@@ -55,16 +56,16 @@ const DeleteBookModal: React.FC<any> = ({ modalOpen, setModalOpen, book }) => {
             Are you sure you want to delete this book?
           </Typography>
           <Box className={classes.cancelButton}>
-            <Button variant="outlined" onClick={handleClose}>
+            <ActionButton variant="outlined" onClick={handleClose}>
               Cancel
-            </Button>
-            <Button
+            </ActionButton>
+            <ActionButton
               variant="contained"
               color="error"
               onClick={handleDeleteBook}
             >
               Delete
-            </Button>
+            </ActionButton>
           </Box>
         </Box>
       </Modal>

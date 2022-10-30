@@ -5,6 +5,9 @@ import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import { setAuthorized } from "../../features/user/userSlice";
 import useStyles from "./styles";
+import ActionButton from "../Shared/Button";
+import LogoutIcon from "@mui/icons-material/Logout";
+import MenuList from "../MenuList";
 
 const ToolbarLayout: React.FC<any> = ({ children }) => {
   const router = useRouter();
@@ -40,47 +43,23 @@ const ToolbarLayout: React.FC<any> = ({ children }) => {
     >
       <div className={classes.container}>
         <div>
-          <Button style={{ color: "white" }} onClick={goToHomePage}>
-            Home
-          </Button>
+          <ActionButton onClick={goToHomePage}>Home</ActionButton>
         </div>
         <div>
           {!isAuthorized && (
-            <Button style={{ color: "white" }} onClick={goToUserCreatePage}>
-              Sign Up
-            </Button>
+            <ActionButton onClick={goToUserCreatePage}>Sign Up</ActionButton>
           )}
           {!isAuthorized && (
-            <Button style={{ color: "white" }}>
+            <ActionButton>
               <Link href="/users/signin">Sign In</Link>
-            </Button>
+            </ActionButton>
           )}
           {isAuthorized && (
             <div style={{ display: "flex", columnGap: "10px" }}>
-              <Button
-                // variant="outlined"
-                style={{ color: "white" }}
-                onClick={() => router.push(`/books/user/${userId}`)}
-              >
-                My Books
-              </Button>
-              <Button
-                // variant="outlined"
-                style={{ color: "white" }}
-                onClick={() => router.push("/books")}
-              >
-                View all Books
-              </Button>
-              <Typography style={{ margin: "auto", cursor: "default" }}>
-                {username}
-              </Typography>
-              <Button
-                style={{ color: "white" }}
-                // variant="outlined"
-                onClick={handleLogout}
-              >
-                Log Out
-              </Button>
+              <MenuList />
+              <div className={classes.logout}>
+                <LogoutIcon onClick={handleLogout} />
+              </div>
             </div>
           )}
         </div>
