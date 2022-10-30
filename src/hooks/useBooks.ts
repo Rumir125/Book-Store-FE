@@ -1,4 +1,5 @@
 import { useQuery } from "react-query";
+import { boolean } from "yup";
 import { fetchBooks, getUserBooks } from "../../pages/api/book-api";
 import { GET_BOOKS, GET_USERS } from "../keys/keys";
 
@@ -30,9 +31,13 @@ export const useAllBooks = () => {
   return { booksData: data?.data || [], isLoading, isError };
 };
 
-export const useSearchedBooks = () => {
-  const { isLoading, isError, isSuccess, data } = useQuery([GET_BOOKS], () =>
-    fetchBooks()
+export const useSearchedBooks = ({ isEnabled }: any) => {
+  const { isLoading, isError, isSuccess, data } = useQuery(
+    [GET_BOOKS],
+    () => fetchBooks(),
+    {
+      enabled: isEnabled,
+    }
   );
 
   return { booksData: data?.data || [], isLoading, isError };

@@ -7,10 +7,27 @@ import { useState } from "react";
 import { signIn } from "../../../pages/api/user-api";
 import useStyles from "./styles";
 import InputField from "../InputField";
+import { toast } from "react-toastify";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+import ErrorMessage from "../ErrorMessage";
 
-const SignInForm: React.FC<any> = () => {
+interface ILoginInput {
+  username: string;
+  password: string;
+}
+
+const schema = yup
+  .object({
+    username: yup.string().required(),
+    password: yup.string().required().min(5),
+  })
+  .required();
+
+const LoginForm: React.FC<any> = () => {
   const router = useRouter();
   const [error, setError] = useState<any>(null);
+  const [loading, setLoading] = useState(false);
   const classes = useStyles();
 
   const {
@@ -18,15 +35,20 @@ const SignInForm: React.FC<any> = () => {
     handleSubmit,
     watch,
     formState: { errors },
-  } = useForm();
+  } = useForm<ILoginInput>({ resolver: yupResolver(schema) });
   const onSubmit = async (data: any) => {
     try {
+      setLoading(true);
       const res: any = await signIn(data);
       localStorage.setItem("jwtToken", res.data.access_token);
       router.push("/");
     } catch (e: any) {
       setError(e);
+      toast.error(`${e.message} ${e.response.statusText}`, {
+        position: toast.POSITION.BOTTOM_CENTER,
+      });
     }
+    setLoading(false);
   };
 
   return (
@@ -41,6 +63,7 @@ const SignInForm: React.FC<any> = () => {
             error={has(errors, "username")}
             name="username"
           />
+          <ErrorMessage name="username" errors={errors} />
           <InputLabel htmlFor="component-simple">Password</InputLabel>
           <InputField
             placeholder="Password..."
@@ -50,8 +73,9 @@ const SignInForm: React.FC<any> = () => {
             autoComplete="awd"
             name="password"
           />
+          <ErrorMessage name="password" errors={errors} />
           <div className={classes.buttonWrapper}>
-            <Button variant="contained" type="submit">
+            <Button variant="contained" type="submit" disabled={loading}>
               Submit
             </Button>
           </div>
@@ -61,4 +85,4 @@ const SignInForm: React.FC<any> = () => {
   );
 };
 
-export default SignInForm;
+export default LoginForm;

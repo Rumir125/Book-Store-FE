@@ -4,16 +4,17 @@ const useStyles = makeStyles((theme) =>
   createStyles({
     container: {
       margin: "0px auto",
-      width: "500px",
+      // width: "500px",
     },
     title: {
       display: "flex",
       justifyContent: "center",
+      paddingBottom: "20px",
     },
     imageWrapper: { display: "flex", justifyContent: "center" },
     image: {
-      width: "128px",
-      height: "128px",
+      width: "300px",
+      height: "600px",
       borderRadius: "5px",
     },
     typography: {

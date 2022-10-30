@@ -1,9 +1,9 @@
 import { NextPage } from "next";
 
-import SignInForm from "../../../src/components/LoginForm";
+import LoginForm from "../../../src/components/LoginForm";
 
 const SignInPage: NextPage = () => {
-  return <SignInForm />;
+  return <LoginForm />;
 };
 
 export default SignInPage;

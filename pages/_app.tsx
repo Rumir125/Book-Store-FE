@@ -16,6 +16,7 @@ import { ThemeProvider } from "@mui/styles";
 import { theme } from "../styles/theme";
 import { Container } from "@mui/material";
 import ToolbarLayout from "../src/components/ToolbarLayout";
+import BackgroundImage from "../src/components/BackgroundImage";
 
 function MyApp({ Component, pageProps }: AppProps<any>) {
   return (
@@ -23,51 +24,16 @@ function MyApp({ Component, pageProps }: AppProps<any>) {
       <QueryClientProvider client={queryClient}>
         <RouteGuard>
           <section style={{ height: "100%", backgroundColor: "#ddceb6" }}>
-            <ToolbarLayout>
-              <Container style={{ height: "100%" }}>
-                <ThemeProvider theme={theme}>
+            <ThemeProvider theme={theme}>
+              <ToolbarLayout>
+                <Container style={{ height: "100%" }}>
                   <Component {...pageProps} />
                   <ReactQueryDevtools initialIsOpen={false} />
                   <ToastContainer />
-                </ThemeProvider>
-              </Container>
-            </ToolbarLayout>
-
-            <div
-              style={{
-                position: "absolute",
-                top: 0,
-                left: 0,
-                height: "100%",
-                width: "100%",
-                overflow: "hidden",
-                zIndex: -1,
-                backgroundColor: "#ddceb6",
-              }}
-            >
-              {pageProps.mainPage && (
-                <div
-                  style={{
-                    top: -150,
-                    left: 180,
-                    position: "absolute",
-                    height: "100%",
-                    width: "100%",
-                    display: "flex",
-                    justifyContent: "center",
-                  }}
-                >
-                  <img
-                    src="/Books4.png"
-                    style={{
-                      height: "1000px",
-                      width: "1000px",
-                      objectFit: "cover",
-                    }}
-                  ></img>
-                </div>
-              )}
-            </div>
+                </Container>
+              </ToolbarLayout>
+              <BackgroundImage mainPage={pageProps.mainPage} />
+            </ThemeProvider>
           </section>
         </RouteGuard>
       </QueryClientProvider>
