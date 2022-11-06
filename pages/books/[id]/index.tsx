@@ -18,7 +18,21 @@ const AddBook: NextPage = () => {
 
   const book = data?.data || {};
 
+  if (!isLoading && !Object.values(book).length) {
+    router.push("/404");
+  }
   return <div>{!isLoading && <CreateOrEditBook isEdit book={book} />}</div>;
 };
+
+// export const getStaticProps: GetStaticProps = async () => {
+//   if (!articleData) {
+//     return {
+//       redirect: {
+//         destination: "/404",
+//         permanent: false,
+//       },
+//     };
+//   }
+// };
 
 export default AddBook;

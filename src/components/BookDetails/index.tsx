@@ -1,4 +1,5 @@
-import { Box, Button, Grid, Typography } from "@mui/material";
+import { Box, Grid, Typography } from "@mui/material";
+import purify from "dompurify";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
@@ -75,9 +76,10 @@ const BookDetails: React.FC<any> = ({
             Published: {year}
           </Typography>
           <Typography>Genres: {genresText}</Typography>
-          <Typography className={classes.typography}>
-            Description: {description}
-          </Typography>
+          <div
+            className={classes.typography}
+            dangerouslySetInnerHTML={{ __html: purify.sanitize(description) }}
+          />
         </Box>
         <div className={classes.footer}>
           {canEditOrEditOrDelete && (
