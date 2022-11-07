@@ -32,6 +32,7 @@
     "yup": "^0.32.11"
   },
   "devDependencies": {
+    "@types/dompurify": "^2.3.4",
     "@types/lodash": "^4.14.185",
     "@types/node": "18.7.16",
     "@types/react": "18.0.19",
