@@ -1,8 +1,8 @@
 import { NextPage } from "next";
-import BooksList from "../../src/components/BooksList";
+import AllBooks from "../../src/components/AllBooks";
 
 const Books: NextPage = () => {
-  return <BooksList title="Books" />;
+  return <AllBooks />;
 };
 
 export default Books;

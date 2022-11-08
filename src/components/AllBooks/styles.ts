@@ -16,6 +16,10 @@ const useStyles = makeStyles((theme: Theme) =>
         justifyContent: "space-around",
       },
     },
+    fetchMoreWrapper: {
+      display: "flex",
+      justifyContent: "flex-end",
+    },
   })
 );
 
